@@ -1,4 +1,4 @@
-version: '3'
+version: '3.8'
 
 services:
   backend:
@@ -6,24 +6,55 @@ services:
     ports:
       - "8000:8000"
     depends_on:
-      - postgres
-      - mongodb
+      postgres:
+        condition: service_healthy
+      mongodb:
+        condition: service_healthy
+    environment:
+      - DATABASE_URL=${DATABASE_URL}
+      - MONGODB_URL=mongodb://mongodb:27017/soc_dashboard
+    volumes:
+      - ./backend:/app
+    restart: always
 
   frontend:
     build: ./frontend
     ports:
       - "3000:3000"
+    depends_on:
+      - backend
+    volumes:
+      - ./frontend:/app
+    restart: always
 
   postgres:
     image: postgres:13
-    environment:
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: soc_dashboard
+    env_file:
+      - .env
     ports:
       - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: always
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $POSTGRES_USER -d $POSTGRES_DB"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   mongodb:
     image: mongo:4.4
     ports:
       - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    restart: always
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongo mongodb:27017/test --quiet
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres_data:
+  mongodb_data:

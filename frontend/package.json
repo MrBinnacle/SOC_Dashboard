@@ -1,8 +1,20 @@
 {
-  "name": "soc-dashboard",
+  "name": "soc-dashboard-frontend",
   "version": "1.0.0",
+  "private": true,
   "dependencies": {
-    "react": "^18.0.0",
-    "axios": "^0.21.1"
+    "@emotion/react": "^11.7.1",
+    "@emotion/styled": "^11.6.0",
+    "@mui/material": "^5.2.0",
+    "@nivo/heatmap": "^0.79.1",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-scripts": "5.0.1"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "test": "react-scripts test --env=jsdom",
+    "build": "react-scripts build",
+    "eject": "react-scripts eject"
   }
 }

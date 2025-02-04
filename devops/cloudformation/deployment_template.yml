@@ -1,0 +1,18 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Deploy SOC Dashboard Application Infrastructure
+Resources:
+  AppEC2Instance:
+    Type: AWS::EC2::Instance
+    Properties:
+      InstanceType: t2.micro
+      ImageId: ami-0abcdef1234567890
+      KeyName: your-key-name
+      SecurityGroups: [ "sg-xxxxxxxx" ]
+  AppLoadBalancer:
+    Type: AWS::ElasticLoadBalancingV2::LoadBalancer
+    Properties:
+      Name: SOCDashboardLB
+      Scheme: internet-facing
+      Subnets:
+        - subnet-xxxxxxx
+        - subnet-yyyyyyy

@@ -3,3 +3,8 @@ uvicorn
 pydantic
 sqlalchemy
 pytest
+psycopg2-binary
+pymongo
+python-jose
+PyJWT
+python-dotenv

@@ -7,9 +7,12 @@ build/
 venv/
 __pycache__/
 *.pyc
+.env
+
 
 # Docker
 *.dockerignore
+*.log
 
 # VSCode
 .vscode/
